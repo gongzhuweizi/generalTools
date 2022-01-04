@@ -21,27 +21,27 @@ class HttpRequest():
 	"""
 	私有属性
 	"""
-	__headers : dict = None
-	__params : dict = None
-	__data : dict = None
-	__cookies : dict = None
-	__files : Union[Any,None] = None
-	__auth : Union[Any,None]  = None
-	__timeout : Union[Any,None] = None
+	__headers : dict
+	__params : dict
+	__data : dict
+	__cookies : dict
+	__files : Union[Any,None]
+	__auth : Union[Any,None]
+	__timeout : Union[Any,None]
 	__allow_redirects : bool = True
-	__proxies : Union[Any,None] = None
-	__hooks : Union[Any,None] = None
-	__stream : Union[Any,None] = None
+	__proxies : Union[Any,None]
+	__hooks : Union[Any,None]
+	__stream : Union[Any,None]
 	__verify: bool  = True
-	__cert : Union[Any,None] = None
-	__json : Union[Any,None] = None
+	__cert : Union[Any,None]
+	__json : Union[Any,None]
 	"""
 	可以配置主机地址
 	"""
 	def set_url(
 			self,
 			url : Union[str,bytes]
-	) -> object :
+	)  :
 		"""
 		@param host:  str | bytes
 		"""
@@ -52,7 +52,7 @@ class HttpRequest():
 	def set_data(
 			self,
 			data : dict
-	) -> object:
+	):
 		"""
 		@param data: dict
 		"""
@@ -62,7 +62,7 @@ class HttpRequest():
 	"""
 	def get_data(
 			self
-	) -> object:
+	):
 		"""
 		@rtype: object
 		"""
@@ -73,7 +73,7 @@ class HttpRequest():
 	def set_header(
 			self,
 			headers : dict
-	) -> object :
+	):
 		"""
 		@param headers: dict
 		"""
@@ -84,7 +84,7 @@ class HttpRequest():
 	def set_params(
 			self,
 			params : dict
-	) ->object :
+	):
 		"""
 		@param params: dict
 		"""
@@ -95,7 +95,7 @@ class HttpRequest():
 	def set_cookies(
 			self,
 			cookies : dict
-	) -> object :
+	) :
 		self.__cookies = cookies
 	"""
 	配置files
@@ -103,7 +103,7 @@ class HttpRequest():
 	def set_files(
 			self,
 			files : Union[None,Any]
-	) -> object:
+	):
 		self.__files = files
 	"""
 	配置http认证
@@ -111,7 +111,7 @@ class HttpRequest():
 	def set_auth(
 			self,
 			auth : object
-	) -> object :
+	):
 		"""
 		@param auth: object
 		"""
@@ -122,7 +122,7 @@ class HttpRequest():
 	def set_timeout(
 			self,
 			timeout : Union[None,Any]
-	) -> object:
+	):
 		"""
 		@param timeout: None | Any
 		"""
@@ -133,7 +133,7 @@ class HttpRequest():
 	def set_allow_redirects(
 			self,
 			allow_redirects : bool
-	) -> object:
+	):
 		self.__allow_redirects = allow_redirects
 	"""
 	配置代理
@@ -141,7 +141,7 @@ class HttpRequest():
 	def set_proxies(
 			self,
 			proxies : Union[Any,None]
-	) -> object:
+	) :
 		"""
 		@param proxies: None | Any
 		"""
@@ -152,7 +152,7 @@ class HttpRequest():
 	def set_hooks(
 			self,
 			hooks : Union[Any,None]
-	) -> object:
+	):
 		"""
 		@param hooks: Any | None
 		"""
@@ -163,7 +163,7 @@ class HttpRequest():
 	def set_stream(
 			self,
 			stream : Union[Any,None]
-	) -> object:
+	):
 		"""
 		@param stream: Any | None
 		"""
@@ -184,8 +184,8 @@ class HttpRequest():
 	"""
 	def set_verify(
 			self,
-			verify : Union[Any,None]
-	) -> object:
+			verify : bool
+	):
 		"""
 		@param verify: bool
 		"""
@@ -206,7 +206,7 @@ class HttpRequest():
 	def set_cert(
 			self,
 			cert : Union[Any,None]
-	) -> object:
+	):
 		"""
 		@param cert: Any | None
 		"""
@@ -227,7 +227,7 @@ class HttpRequest():
 	def set_json(
 			self,
 			json : Union[Any,None]
-	) -> object :
+	):
 		"""
 		@param json: object
 		"""
@@ -283,14 +283,13 @@ class HttpRequest():
 	"""
 	获取请求地址
 	"""
-	def get_host(
+	def get_url(
 			self
 	) -> str :
 		"""
-
 		@rtype: str
 		"""
-		return self.__host
+		return self.__url
 	"""
  	获取请求headers
 	"""
