@@ -1,3 +1,9 @@
+'''
+@Project ：generalTools
+@File ：DataClassRequestParams.py
+@Author ：zhangyi
+@Date ：2022/1/4 10:14 AM
+'''
 import requests
 from requests import  Response
 from requests.auth import HTTPBasicAuth
@@ -427,7 +433,9 @@ class HttpRequest():
 		@return: object
 		"""
 		return self.__files
-
+	"""
+	发送http请求，支持 get、post、put、delete
+	"""
 	def send_http_request(
 			self,
 			method: str = None
@@ -460,19 +468,34 @@ class HttpRequest():
 			return response
 		else:
 			return {'code': 400, 'message': '请求方式错误'}
+	"""
+	静态方法，获取返回状态码
+	"""
+	@classmethod
+	def get_reponse_status_code(
+			cls,
+			data : Response
+	) -> int:
+		return data.status_code
+	"""
+	静态方法，获取返回的json数据
+	"""
 	@classmethod
 	def analysis_reponse_json_data(
 			cls,
 			data : Response
 
-	) -> object :
+	) -> Dict :
 		data_json = data.json()
 		return data_json
+	"""
+	静态方法，获取返回的文本数据
+	"""
 	@classmethod
 	def analysis_reponse_text_data(
 			cls,
 			data : Response
-	) -> object :
+	) -> str :
 		data_text = data.text
 		return data_text
 
