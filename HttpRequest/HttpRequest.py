@@ -3,6 +3,10 @@ from requests import  Response
 from requests.auth import HTTPBasicAuth
 from typing import Union
 from typing import Any,Optional,Dict
+import DataClassRequestParams
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
 
 """
 http请求工具类
@@ -46,7 +50,23 @@ class HttpRequest():
 	"""
 
 	def __get_params_dict(self):
-		return {'timeout':self.__timeout}
+		request_params = DataClassRequestParams.DataClassRequestParams(
+			params = self.__params,
+			data = self.__data,
+			headers = self.__headers,
+			cookies = self.__cookies,
+			files = self.__files,
+			auth = self.__auth,
+			timeout = self.__timeout,
+			allow_redirects = self.__allow_redirects,
+			proxies = self.__proxies,
+			hooks = self.__hooks,
+			stream = self.__stream,
+			verify = self.__verify,
+			cert = self.__cert,
+			json = self.__json
+		)
+		return request_params.__dict__
 	"""
 	可以配置主机地址
 	"""
@@ -417,7 +437,6 @@ class HttpRequest():
 		if self.__method == 'get':
 			response = requests.get(
 				self.__url,
-				params = None,
 				**self.__get_params_dict()
 			)
 			return response
