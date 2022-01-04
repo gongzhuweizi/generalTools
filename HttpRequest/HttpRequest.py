@@ -5,14 +5,14 @@
 @Date ：2022/1/4 10:14 AM
 '''
 import requests
-from requests import  Response
+from requests import Response
 from requests.auth import HTTPBasicAuth
 from typing import Union
-from typing import Any,Optional,Dict
+from typing import Any, Optional, Dict
 import DataClassRequestParams
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 """
 http请求工具类
@@ -23,7 +23,6 @@ class HttpRequest():
 	"""
 	初始化 传入主机地址
 	"""
-
 
 	def __init__(
 			self,
@@ -38,7 +37,7 @@ class HttpRequest():
 	私有属性
 	"""
 	__headers: Optional[Dict] = None
-	__params:  Optional[Dict]= None
+	__params: Optional[Dict] = None
 	__data: Optional[Dict] = None
 	__cookies: Optional[Dict] = None
 	__files: Union[Any, None] = None
@@ -50,29 +49,30 @@ class HttpRequest():
 	__stream: Union[Any, None] = None
 	__verify: bool = True
 	__cert: Union[Any, None] = None
-	__json: Union[Any, None]  = None
+	__json: Union[Any, None] = None
 	"""
 
 	"""
 
 	def __get_params_dict(self):
 		request_params = DataClassRequestParams.DataClassRequestParams(
-			params = self.__params,
-			data = self.__data,
-			headers = self.__headers,
-			cookies = self.__cookies,
-			files = self.__files,
-			auth = self.__auth,
-			timeout = self.__timeout,
-			allow_redirects = self.__allow_redirects,
-			proxies = self.__proxies,
-			hooks = self.__hooks,
-			stream = self.__stream,
-			verify = self.__verify,
-			cert = self.__cert,
-			json = self.__json
+			params=self.__params,
+			data=self.__data,
+			headers=self.__headers,
+			cookies=self.__cookies,
+			files=self.__files,
+			auth=self.__auth,
+			timeout=self.__timeout,
+			allow_redirects=self.__allow_redirects,
+			proxies=self.__proxies,
+			hooks=self.__hooks,
+			stream=self.__stream,
+			verify=self.__verify,
+			cert=self.__cert,
+			json=self.__json
 		)
 		return request_params.__dict__
+
 	"""
 	可以配置主机地址
 	"""
@@ -433,13 +433,15 @@ class HttpRequest():
 		@return: object
 		"""
 		return self.__files
+
 	"""
 	发送http请求，支持 get、post、put、delete
 	"""
+
 	def send_http_request(
 			self,
 			method: str = None
-	) -> Union [Response,Dict]:
+	) -> Union[Response, Dict]:
 
 		self.__method = method
 		if self.__method == 'get':
@@ -450,8 +452,8 @@ class HttpRequest():
 			return response
 		elif self.__method == 'post':
 			response = requests.post(self.__url,
-									 data = self.__data,
-									 json = self.__json,
+									 data=self.__data,
+									 json=self.__json,
 									 **self.__get_params_dict()
 									 )
 			return response
@@ -468,35 +470,39 @@ class HttpRequest():
 			return response
 		else:
 			return {'code': 400, 'message': '请求方式错误'}
+
 	"""
 	静态方法，获取返回状态码
 	"""
+
 	@classmethod
 	def get_reponse_status_code(
 			cls,
-			data : Response
+			data: Response
 	) -> int:
 		return data.status_code
+
 	"""
 	静态方法，获取返回的json数据
 	"""
+
 	@classmethod
 	def analysis_reponse_json_data(
 			cls,
-			data : Response
+			data: Response
 
-	) -> Dict :
+	) -> Dict:
 		data_json = data.json()
 		return data_json
+
 	"""
 	静态方法，获取返回的文本数据
 	"""
+
 	@classmethod
 	def analysis_reponse_text_data(
 			cls,
-			data : Response
-	) -> str :
+			data: Response
+	) -> str:
 		data_text = data.text
 		return data_text
-
-
