@@ -8,7 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .idea
-
+.DS_Store
 .Python
 build/
 develop-eggs/
