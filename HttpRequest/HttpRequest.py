@@ -5,14 +5,16 @@
 @Date ：2022/1/4 10:14 AM
 '''
 import requests
+import asyncio
 from requests import Response
 from requests.auth import HTTPBasicAuth
 from typing import Union
 from typing import Any, Optional, Dict
 import DataClassRequestParams
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+
 
 """
 http请求工具类
