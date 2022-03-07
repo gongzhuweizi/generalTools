@@ -7,6 +7,7 @@
 @Date ：2022/1/13 2:19 PM
 '''
 import sys
+import ansible.inventory.data
 from SSHConnectFileUploadDown import SSHConnectFileUploadDown
 if __name__ == '__main__':
 	s = SSHConnectFileUploadDown(
