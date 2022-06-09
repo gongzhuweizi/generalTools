@@ -1,0 +1,53 @@
+dev:
+  requestDomain: http://dev-bgateway.wanxue.cn
+  mysql:
+    mysqlHost: 10.1.1.119
+    mysqlPort: 3306
+    mysqlUsername: profession
+    mysqlPassword: 3ZFQCskBC3LtmZY8
+dev01:
+  requestDomain:
+  mysql:
+    mysqlHost:
+    mysqlPort:
+    mysqlUsername:
+    mysqlPassword:
+alpha:
+  requestDomain:
+  mysql:
+    mysqlHost:
+    mysqlPort:
+    mysqlUsername:
+    mysqlPassword:
+beta:
+  requestDomain:
+  mysql:
+    mysqlHost:
+    mysqlPort:
+    mysqlUsername:
+      mysqlPassword:
+pro:
+  requestDomain:
+  mysql:
+    mysqlHost:
+    mysqlPort:
+    mysqlUsername:
+    mysqlPassword:
+
+headers:
+    v: '3'
+    m: 'test-gateway'
+    p: '13'
+    u: 'ffffffff-8d13-a56b-7169-0c980033c587'
+    h: 'wanxue'
+    forwardId: '70'
+    a: '15'
+    version: 'v2'
+interfaceRequestPath:
+  get_token: /businessCareer/recruitment/user/loginDev
+  addOrEditStudentBaseInfo: /businessCareer/sys/student/baseInfo/addOrEdit
+  addOrEditStudentIntentionInfo: /businessCareer/sys/student/intention/addOrEdit
+  addOrEditStudentabilityInfo:  /businessCareer/sys/student/ability/addOrEdit
+  intentionQuery: /businessCareer/sys/student/intention/query
+  abilityQuery: /businessCareer/sys/student/ability/query
+

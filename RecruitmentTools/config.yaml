@@ -1,0 +1,29 @@
+env:
+  alpha:
+    requestDomain:
+  dev:
+    requestDomain:
+  beta:
+    requestDomain:
+  pro:
+    requestDomain:
+  dev01:
+    requestDomain:
+
+
+base:
+  headers:
+    v: '3'
+    p: '1'
+    u: 'ffffffff-8d13-a56b-7169-0c980033c587'
+    h: 'wanxue'
+    forwardId: '70'
+    a: '15'
+    version: 'v2'
+login:
+  phone:
+  password:
+  requestPath: /businessCareer/recruitment/user/login
+
+
+

@@ -1,0 +1,144 @@
+env:
+  alpha:
+    requestDomain:
+  dev:
+    requestDomain: http://dev-bgateway.wanxue.cn
+  beta:
+    requestDomain:
+  pro:
+    requestDomain:
+  dev01:
+    requestDomain:
+
+
+base:
+  headers:
+    v: '3'
+    m: 'test'
+    p: '13'
+    u: 'ffffffff-8d13-a56b-7169-0c980033c587'
+    h: 'wanxue'
+    forwardId: '70'
+    a: '15'
+    version: 'v2'
+
+
+
+login:
+  phone: 13100000016
+  password: wx123456
+  requestPath: /businessCareer/recruitment/user/login
+
+getSchoolIDWriteConfig:
+  requestPath: /businessCareer/recruitment/user/get/school/fuzzy
+
+intendedPositionId:
+  requestPath:
+
+industryList:
+  requestPath: /businessCareer/common/recruitment/passUrl/industry/list
+
+functionList:
+  requestPath: /businessCareer/common/recruitment/passUrl/function/list
+
+expectedAreasCodeList:
+  requestPath: /businessCareer/common/recruitment/passUrl/city/list
+
+subjectInfo:
+  requestPath: /businessCareer/common/recruitment/passUrl/subject/list
+
+
+setupOne:
+  params:
+    studentPic: "" #学生图片
+    name: '李四' #学生姓名
+    schoolName: 北京大学  #学校名称
+    graduationYear: 2022 #入学年份
+    jobPhone: 13811119674 #手机号
+    email: 724434980@qq.com #邮箱
+    sex: 0  #0女，1男
+    birthDay: 1992 #生日
+    nativePlace: 北京 #籍贯
+    politicalStatus: 0 #政治面貌 0无 1团员 2党员
+    height: 185 #身高
+    appearance: 0 #0 正常 1较好 2好
+  requestPath: /businessCareer/sys/student/baseInfo/addOrEdit
+
+
+
+setupTwo:
+  params:
+    salaryFlag: true #boolean	是否有薪资区间，false-不限，true-有区间
+    salaryMin: 100.01 #double	最少薪酬金额，保留两位小数
+    salaryMax: 101.02 #double	最高薪酬金额，保留两位小数
+    companyScale: 1 #int	公司规模，0-不限，1-50-99人，2-100-499人，3-500-999人，4-1000-9999人，5-10000人以上
+    postIds:  #List<List<Long>>	意向职位 ，必传
+      -
+        - 1530123794373492737
+        - 1530123794662899714
+      -
+        - 1530123933058154497
+        - 1530123933309812737
+    industryIds: #List<Long>	意向行业 如果为null，代表页面选择的不限
+      - 互联网
+      - 农业
+    companyNatures: 0 #List<Integer>	公司性质，0-不限，1-民企，2-外企，3-合资
+    functions:
+      - functionName: 产品研发
+        children:
+          - functionName: 客户需求研究
+          - functionName: 产品功能开发
+          - functionName: 产品外形开发
+      - functionName: 人力资源
+        children:
+          - functionName: 薪酬体系
+          - functionName: 培训管理
+          - functionName: 绩效考核
+
+    expectedAreas: ##list<List>	当前期望工作区域,包含如下：[[pcode,code],[pcode,null]]，如果为[[null]]，代表页面选择的不限
+      - area: 北京市
+        childAreas:
+          - name: 海淀区
+          - name: 朝阳区
+      - area: 上海市
+        childAreas:
+          - name: 黄浦区
+          - name: 徐汇区
+
+    futureAreas: ##未来迁移工作区域,包含如下：[[pcode,code],[pcode,null]]，如果为[[null]]，代表页面选择的不限
+      - area: 北京市
+        childAreas:
+          - name: 海淀区
+          - name: 朝阳区
+      - area: 上海市
+        childAreas:
+          - name: 黄浦区
+          - name: 徐汇区
+  requestPath: /businessCareer/sys/student/intention/addOrEdit
+
+setupThree:
+  params:
+    schoolType: 3 #学校类型，1-985，2-双一流，3-其他本科，4-双高高职，5-其他高职，6-成人教育
+    eduLevel: 1 #学历层次，1-博士 2-硕士 3-本科 4-成教本科 5-高职 6-成教专科
+    gradeFlag: true #有无学习成绩，0-无，1-有
+    creditRank: 0 #学积分排名，0-其他（默认），1-专业前5%，2-专业前20%
+    scholarship: 1 #奖学金，0-无（默认），1-国家级奖学金 2-省市级奖学金 3-校级奖学金 4-院级奖学金 5-其他奖学金
+    academicResearchFlag: true  #有无学术科研，0-无，1-有
+    foreignLanguageFlag: true #有无外语水平，0-无，1-有
+    professionalSkills: 精通java开发 #职业技能
+    associationPosition: 社团团长 #社团职务，0-无（默认），1-省市级学联或省市级社团正、副主席及同档职务，2-院学生会或社团正、副主席及同档职务，3-校学生会或校级社团正、副主席及同档职务，4-省市级学联或省市级社团正、副部长及同档职务，5-校学生会或校级社团正、副部长及同档职务，6-院学生会或社团正、副部长及同档职务，7-省市级学联或省市级社团成员，8-校级学生会、研究生会或社团成员，9-院级学生会、研究生会或社团成员，10-班委会或班级社团成员
+    thinking: 1
+    subjectId: #本专业学科id(一级学科) 单选
+      subjectName:
+        name: 经济学  #学科门类名称
+        children: 统计学 #一级学科
+    professionSubjectId:  #本专业学科id(二级学科) 单选
+      subjectName: #学科门类名称
+        name: 经济学 #学科门类
+        subjectchildren:
+          name: 统计学 #一级学科
+          children: 经济史 #耳机学科 ---专业
+    goodAtSubjectIds:
+      - subjectName: #学科门类名称
+        name: 法学 #学科门类
+

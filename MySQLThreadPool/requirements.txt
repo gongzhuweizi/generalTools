@@ -1,0 +1,4 @@
+mysql-connector == 2.2.9
+pymysql == 1.0.2
+DBUtils == 3.0.2
+MySQL-connector-python == 8.0.29

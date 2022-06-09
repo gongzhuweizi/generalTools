@@ -1,0 +1,6 @@
+jenkins:
+  env: dev
+  server_url: 
+  username:
+  password:
+  token:

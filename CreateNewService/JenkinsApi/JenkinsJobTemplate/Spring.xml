@@ -1,0 +1,183 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.22">
+      <gitLabConnection></gitLabConnection>
+      <jobCredentialId></jobCredentialId>
+      <useAlternativeCredential>false</useAlternativeCredential>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>3</daysToKeep>
+        <numToKeep>10</numToKeep>
+        <artifactDaysToKeep>3</artifactDaysToKeep>
+        <artifactNumToKeep>6</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.13">
+          <name>git_chose</name>
+          <description>git分支选择</description>
+          <uuid>c0a52b06-2a4c-4d39-b2d2-e706efa30db9</uuid>
+          <type>PT_BRANCH</type>
+          <branch></branch>
+          <tagFilter>*</tagFilter>
+          <branchFilter>.*</branchFilter>
+          <sortMode>NONE</sortMode>
+          <defaultValue>origin/dev</defaultValue>
+          <selectedValue>NONE</selectedValue>
+          <quickFilterEnabled>true</quickFilterEnabled>
+          <listSize>5</listSize>
+        </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>projectName</name>
+          <description>项目名称</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>es-api-gateway</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>serviceName</name>
+          <description>服务名称</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>es-api-gateway</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>deploymentEnv</name>
+          <description>部署环境</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>alpha</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>servicePort</name>
+          <description>服务端口</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>9001</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>memXms</name>
+          <description>memXms</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>512m</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>memXmx</name>
+          <description>memXmx</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>512m</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>memXmn</name>
+          <description>memXmn</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>128m</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>metaSpaceSize</name>
+          <description>metaSpaceSize</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>256m</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>maxMetaSpaceSize</name>
+          <description>maxMetaSpaceSize</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>256m</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>podNum</name>
+          <description>部署pod个数</description>
+          <defaultValue>1</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.9.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>git@10.0.1.206:profession-c-java/profession-c-java.git</url>
+        <credentialsId>8a2c55f3-a304-48e4-b950-06395ef697fc</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>$git_chose</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="empty-list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <org.jvnet.hudson.plugins.SSHBuilder plugin="ssh@2.6.1">
+      <siteName>root@10.0.1.210:22</siteName>
+      <command>workspace=`echo $WORKSPACE|sed &apos;s#/var/jenkins_home#/home/wx/.jenkins#g&apos;`
+
+if [[ &quot;$projectName&quot; == &quot;$serviceName&quot; ]];then
+   echo &quot;$workspace &amp;&amp; ssh gradlew --no-daemon  $serviceName:build -x test&quot;
+   cd $workspace &amp;&amp; sh gradlew --no-daemon  $serviceName:build -x test
+   if [[ $? -ne 0 ]];then
+      echo &quot;构建失败&quot;  &amp;&amp; exit 123
+   fi
+else
+   echo &quot;$workspace &amp;&amp; sh gradlew --no-daemon  $projectName:$serviceName:build -x test&quot;
+   cd $workspace &amp;&amp; sh gradlew --no-daemon  $projectName:$serviceName:build -x test
+   if [[ $? -ne 0 ]];then
+      echo &quot;构建失败&quot;  &amp;&amp; exit 123
+   fi
+fi</command>
+      <execEachLine>false</execEachLine>
+      <hideCommand>false</hideCommand>
+    </org.jvnet.hudson.plugins.SSHBuilder>
+    <org.jvnet.hudson.plugins.SSHBuilder plugin="ssh@2.6.1">
+      <siteName>root@10.0.1.210:22</siteName>
+      <command>echo  &quot;$BUILD_USER_ID&quot; 
+workspace=`echo $WORKSPACE|sed &apos;s#/var/jenkins_home#/home/wx/.jenkins#g&apos;`
+sh   /scripts/shell/online_build_image/online_build_image.sh  &quot;$projectName&quot;  &quot;$serviceName&quot;  &quot;$workspace&quot;  &quot;$deploymentEnv&quot; &quot;$memXms&quot; &quot;$memXmx&quot; &quot;$memXmn&quot; &quot;$metaSpaceSize&quot; &quot;$maxMetaSpaceSize&quot; &quot;$servicePort&quot; &quot;$BUILD_USER_ID&quot;  &quot;$podNum&quot;</command>
+      <execEachLine>false</execEachLine>
+      <hideCommand>false</hideCommand>
+    </org.jvnet.hudson.plugins.SSHBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.builduser.BuildUser plugin="build-user-vars-plugin@1.8"/>
+  </buildWrappers>
+</project>

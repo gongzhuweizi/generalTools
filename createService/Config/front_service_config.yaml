@@ -1,0 +1,20 @@
+- tag_name: description
+  template_project_text: 项目说明
+  new_project_text: 前端招聘项目  #jenkins任务说明
+- tag_name: string
+  template_project_text: node_version
+  new_project_text: v16.13.0  #Node版本号
+- tag_name: string
+  template_project_text: package_name
+  new_project_text: dist  #打包报名
+- tag_name: url
+  template_project_text: git_host
+  new_project_text: git@10.0.1.206:profession-c-front/provider-b-career-recruit.git  #服务git地址
+- tag_name: siteName
+  template_project_text: build_remote_host
+  new_project_text: root@10.0.1.210:22  #远程构建服务器地址
+- tag_name: siteName
+  template_project_text: update_service_remote_host
+  new_project_text: root@10.0.1.210:22  #远程构建服务器地址
+
+
