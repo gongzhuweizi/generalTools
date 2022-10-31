@@ -8,4 +8,5 @@
 '''
 import Resume
 if __name__ == '__main__':
-	Resume.run(taskslimit = 10)
+	print("启动任务！！")
+	Resume.run(taskslimit = 5,env='dev')

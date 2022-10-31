@@ -10,31 +10,24 @@ from OperateExcel import OperateExcel
 from Tools import fileExsits
 
 if __name__ == '__main__':
-	"""
-	添加sheet
-	"""
-	def test6():
-		op = OperateExcel()
-		op.setSheetName("哈哈哈")
-		op.setExcelDirFileName("excelData/demo-2021-07-26.xlsx")
-		data = [['a','b']]
-		op.setExcelColumns(['标题列1','标题列2'])
-		op.setExcelData(data)
-		op.addExcelSheetWrite()
-	test6()
 
-    # """
-	# 按照行写入
-	# """
-	# def test2():
+	# def main():
 	# 	op = OperateExcel()
-	# 	columns=['col 1', 'col 2']
-	# 	op.setExcelColumns(columns)
-	# 	data = [['a', 'b'], ['c', 'd']]
-	# 	op.setSheetName("孩子")
+	# 	op.setSheetName("哈哈哈")
+	# 	op.setExcelDirFileName("excelData/aaa.xlsx")
+	# 	data = [['a','b']]
+	# 	op.setExcelColumns(['标题列1','标题列2'])
 	# 	op.setExcelData(data)
-	# 	op.pdLineListWrite()
-	# test2()
+	# 	op.addExcelSheetWrite()
+	def main():
+		op = OperateExcel()
+		columns=['col 1', 'col 2']
+		op.setExcelColumns(columns)
+		data = [['a', 'b'], ['c', 'd']]
+		op.setSheetName("孩子")
+		op.setExcelData(data)
+		op.pdLineListWrite()
+	main()
 	# """
 	# 按照列进行写入
 	# """

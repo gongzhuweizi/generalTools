@@ -106,7 +106,26 @@ class Resume:
 	def __get_student_pic(
 			self,
 	) -> str:
-		return "https://wx-dev-image.wanxue.cn/BUSINESS/student/web/job/image/20220530/d18dcabd00294b388a46f293f503809a.png"
+		pic_list = [
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/10.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/11.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/12.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/13.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/14.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/15.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/16.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/1jpeg.jpeg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/2.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/3.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/4.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/5.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/6.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/7.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/8.jpg",
+			"https://wx-dev-image.oss-cn-beijing.aliyuncs.com/%E7%99%BE%E6%97%A5%E6%8B%9B%E8%81%98%E6%B5%8B%E8%AF%95%E5%8F%AF%E5%88%A0%E9%99%A4/9.jpg",
+		]
+		pic = self.random_value(pic_list, 1)[0]
+		return pic
 
 	"""
 	学生基本信息，工作名字
@@ -116,7 +135,12 @@ class Resume:
 			self,
 
 	) -> str:
-		return "张三"
+		xList = ['赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许',
+				 '何', '吕', '施', '张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章']
+		m = str(random.randrange(4, 10)) + ''.join(str(random.choice(range(10))) for _ in range(4))
+		x = self.random_value(xList, 1)[0]
+		name = x + m
+		return name
 
 	"""
 	随机取一个获取学校信息，包含学校id和学校名称
@@ -265,14 +289,13 @@ class Resume:
 	def __get_post_ids(
 			self,
 	) -> List:
-
-		self.__careerMySQLObject.set_mysql_sql("select id from common_post where level=3")
+		self.__careerMySQLObject.set_mysql_sql("select id from common_post where level=3 and deleted=0")
 		idList = self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 5)
 		postIdsList = list()
 		for id in idList:
-			self.__careerMySQLObject.set_mysql_sql("select pid from common_post where id =%d" % id[0])
+			self.__careerMySQLObject.set_mysql_sql("select pid from common_post where id =%d and deleted=0" % id[0])
 			pid = self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)
-			self.__careerMySQLObject.set_mysql_sql("select pid from common_post where id =%d" % pid[0])
+			self.__careerMySQLObject.set_mysql_sql("select pid from common_post where id =%d and deleted=0 " % pid[0])
 			ppid = self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)
 			postIdsList.append([ppid[0][0], pid[0][0], id[0]])
 		return postIdsList
@@ -462,7 +485,6 @@ class Resume:
 	def __get_professional_skills(
 			self,
 	) -> str:
-
 		professionalSkills = "职业技能" + str(random.randint(0, 1000))
 		return professionalSkills
 
@@ -508,20 +530,19 @@ class Resume:
 			eduLevel: int
 
 	) -> List:
-
 		yList = [1, 2]
 		bList = [3, 4]
 		zList = [5, 6]
 		if eduLevel in yList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=2")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=2 and deleted=0")
 		elif eduLevel in bList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=2")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=2 and deleted=0")
 		elif eduLevel in zList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=2")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=2 and deleted=0")
 
 		id = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
 
-		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s" % id)
+		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s and deleted=0" % id)
 		pid = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
 		subjectId = [[pid, id]]
 		return subjectId
@@ -539,16 +560,16 @@ class Resume:
 		bList = [3, 4]
 		zList = [5, 6]
 		if eduLevel in yList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=3")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=3 and deleted = 0")
 		elif eduLevel in bList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=3")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=3 and deleted = 0")
 		elif eduLevel in zList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=3")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=3 and deleted = 0")
 
 		id = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
-		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s" % id)
+		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s and deleted=0" % id)
 		pid = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
-		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s" % pid)
+		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s and deleted=0" % pid)
 		ppid = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
 		professionSubjectId = [[ppid, pid, id, ]]
 		return professionSubjectId
@@ -565,11 +586,11 @@ class Resume:
 		bList = [3, 4]
 		zList = [5, 6]
 		if eduLevel in yList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=1")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=1 and deleted=0")
 		elif eduLevel in bList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=1")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=1 and deleted=0")
 		elif eduLevel in zList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=1")
+			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=1 and deleted=0")
 		sqlResult = self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect)
 		subjectCount = len(sqlResult)
 		num = random.randint(1, subjectCount)
@@ -682,7 +703,6 @@ class Resume:
 	def __get_execution_leadership_level_ids(
 			self,
 	) -> List:
-
 		executionLeadershipLevelIds = list()
 		self.__careerMySQLObject.set_mysql_sql(
 			"select id from b_recruitment_extension_level WHERE type =7 and (source = 0 or source=1)  and pid=0")
@@ -893,17 +913,13 @@ class Resume:
 """
 
 
-def student_resume(student_info):
-	envInfoConfigPath = "config/config.yaml"
-	env = 'dev'
-	config = Resume.load_yaml_data(envInfoConfigPath)
-	dbHost = config[env]['mysql']['mysqlHost']
-	dbUsername = config[env]['mysql']['mysqlUsername']
-	dbPassword = config[env]['mysql']['mysqlPassword']
-	careerMySQLObject = OperationMySQL.OperationMySQL(dbHost, dbUsername, dbPassword)
-	careerMySQLObject.set_mysql_db('es_career')
-	baseMySQLObject = OperationMySQL.OperationMySQL(dbHost, dbUsername, dbPassword)
-	baseMySQLObject.set_mysql_db("es_base")
+def student_resume(
+		student_info: Dict,
+		envInfoConfigPath: str,
+		careerMySQLObject: OperationMySQL,
+		baseMySQLObject: OperationMySQL,
+		env
+):
 	resumeObject = Resume(envInfoConfigPath, careerMySQLObject, baseMySQLObject)
 	resumeObject.set_env(env)
 	resumeObject.get_token(student_info)
@@ -921,8 +937,8 @@ def put_queue(
 		student_info_queue: Queue
 ) -> None:
 	dataInfoDict = Resume.load_yaml_data("data/userInfo.yaml")
-	for data in dataInfoDict:
-		student_info_queue.put_nowait(data)
+	for student_info in dataInfoDict:
+		student_info_queue.put_nowait(student_info)
 
 
 """
@@ -931,11 +947,15 @@ def put_queue(
 
 
 def get_queue(
-		student_info_queue: Queue
+		student_info_queue: Queue,
+		envInfoConfigPath: str,
+		careerMySQLObject: OperationMySQL,
+		baseMySQLObject: OperationMySQL,
+		env: str
 ) -> None:
 	while not student_info_queue.empty():
-		data = student_info_queue.get_nowait()
-		student_resume(data)
+		student_info = student_info_queue.get_nowait()
+		student_resume(student_info, envInfoConfigPath, careerMySQLObject, baseMySQLObject, env)
 
 
 """
@@ -944,13 +964,32 @@ def get_queue(
 
 
 def run(
-		taskslimit: int = None
+		taskslimit: int = None,
+		env: str = ''
 ) -> None:
+	print("创建异步队列中......")
 	student_info_queue = Queue()
 	put_queue(student_info_queue)
+	print("创建异步队列完成")
+	envInfoConfigPath = "config/config.yaml"
+	config = Resume.load_yaml_data(envInfoConfigPath)
+	dbHost = config[env]['mysql']['mysqlHost']
+	dbUsername = config[env]['mysql']['mysqlUsername']
+	dbPassword = config[env]['mysql']['mysqlPassword']
+	print("创建career数据库对象连接中......")
+	careerMySQLObject = OperationMySQL.OperationMySQL(dbHost, dbUsername, dbPassword)
+	careerMySQLObject.set_mysql_db('es_career')
+	print("创建career数据库对象完成")
+	print("创建base数据库对象连接中......")
+	baseMySQLObject = OperationMySQL.OperationMySQL(dbHost, dbUsername, dbPassword)
+	baseMySQLObject.set_mysql_db("es_base")
+	print("创建base数据库对象完成")
 	taskList = []
+	print("创建异步任务中......")
 	for x in range(taskslimit):
 		# 循环几次，相当于开了几个并发任务
-		task = gevent.spawn(get_queue, student_info_queue)
+		task = gevent.spawn(get_queue, student_info_queue, envInfoConfigPath, careerMySQLObject, baseMySQLObject,
+							env)
 		taskList.append(task)
+	print("创建异步任务完成")
 	gevent.joinall(taskList)  # 使用协程来执行

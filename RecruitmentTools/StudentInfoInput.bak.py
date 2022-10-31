@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 '''
 @Project ：generalTools
-@File ：StudentInfoInput.py
+@File ：StudentInfoInput.bak.py
 @Author ：zhangyi
 @Date ：2022/5/27 9:08 AM
 '''

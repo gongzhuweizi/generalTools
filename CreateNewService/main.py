@@ -6,3 +6,5 @@
 @Author ：zhangyi
 @Date ：2022/4/15 4:28 PM
 '''
+if '__name__' == '__main__':
+	pass

@@ -10,7 +10,7 @@ from requests import Response
 from requests.auth import HTTPBasicAuth
 from typing import Union
 from typing import Any, Optional, Dict
-import DataClassRequestParams
+from HttpRequest import DataClassRequestParams
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 

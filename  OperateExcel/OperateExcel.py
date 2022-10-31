@@ -125,6 +125,7 @@ class OperateExcel():
 	增加sheet，并写入数据
 	"""
 	def addExcelSheetWrite(self):
+		print(self.excelDirFileName)
 		if fileExsits(self.excelDirFileName):
 			wb = Workbook()
 			sh = wb.create_sheet(self.sheetName)

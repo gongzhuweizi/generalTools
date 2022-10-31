@@ -1,10 +1,12 @@
 dev:
   requestDomain: http://dev-bgateway.wanxue.cn
-  mysql:
-    mysqlHost: 10.1.1.119
-    mysqlPort: 3306
-    mysqlUsername: profession
-    mysqlPassword: 3ZFQCskBC3LtmZY8
+  db:
+    type: mysql
+    config:
+      host: 10.1.1.119
+      port: 3306
+      user: profession
+      password: 3ZFQCskBC3LtmZY8
 dev01:
   requestDomain:
   mysql:

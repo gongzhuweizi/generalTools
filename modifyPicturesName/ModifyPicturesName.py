@@ -150,10 +150,9 @@ if __name__ == '__main__':
 			path_file_number = m.get_dir_file_count_digit(picture_dir)
 			picture_file_name = input("\033[33m请输入文件前缀名称:\n\033[0m") #配置文件名称
 			m.set_file_befor(picture_file_name) #配置图片前缀
-
 			if m.analysis_file_befor_name(): #解析图片前缀名字是否合法，不合法继续输入
 				file_list_keys  = sorted([ x for x in file_dict.keys()]) #获取所有的文件名称
-				modify_secuess = 0
+				modify_success = 0
 				modify_fail = 0
 				for x in file_list_keys : #遍历所有文件名
 					old_file = x
@@ -163,9 +162,9 @@ if __name__ == '__main__':
 					try:
 						os.rename(file_dict[x]+"/"+old_file,file_dict[x]+"/"+new_filename)
 						print("\033[32m源目录文件:\033[0m"+file_dict[x]+"/"+old_file+"----> 目的文件："+file_dict[x]+"/"+new_filename+"  "+"修改成功！")
-						modify_secuess = modify_secuess + 1
+						modify_success += 1
 					except Exception as e:
-						modify_fail = modify_fail + 1
+						modify_fail += 1
 						print("\033[4;31m源目录文件:\033[0m"+file_dict[x]+"/"+old_file+"----> 目的文件："+file_dict[x]+"/"+new_filename+"  "+"修改失败！"+e)
 				print("\033[33m文件总数为:\033[0m"+str(len(file_list_keys))+",\033[32m文件修改成功个数为:\033[0m"+str(modify_secuess)+",\033[031m失败个数为:\033[0m"+str(modify_fail)+".")
 			else:

@@ -7,6 +7,7 @@
 @Date ：2022/4/15 11:20 AM
 '''
 import jenkins
+from DataClass import JenkinsAuth
 
 """
 """
@@ -15,12 +16,13 @@ import jenkins
 class JenkinsApi:
 	def __init__(
 			self,
-			server_url: str,
-			user: str,
-			token: str
+			JenkinsAuth: JenkinsAuth,
 	):
-		self.server_url = server_url
-		self.user = user
-		self.token = token
-		self.conn = jenkins.Jenkins(self.server_url, username=self.user, password=self.token)
+		self.JenkinsAuth = JenkinsAuth
+	def analysis_jenkins_template(self):
+		pass
+	def create_job_for_template(self):
+		pass
+
+
 

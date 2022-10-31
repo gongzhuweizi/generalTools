@@ -220,7 +220,6 @@ class OperationMySQL:
 		:rtype: str or int
 		"""
 		self.__check_sql_isNull()
-		conn = self.__get_mysql_connect()
 		try:
 			cursor = conn.cursor()
 			result = cursor.execute(self._sql)

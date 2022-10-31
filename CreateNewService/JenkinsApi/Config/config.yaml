@@ -1,6 +1,40 @@
 jenkins:
   env: dev
-  server_url: 
-  username:
-  password:
+  server_url: http://10.0.1.210:8080/
+  username: admin
+  password: jj89757***
   token:
+  git_parameter:
+    default_git_branch_xpath: properties/hudson.model.ParametersDefinitionProperty/parameterDefinitions/net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition/defaultValue
+    default_git_branch: dev
+  project_parameter:
+    project_name_xpath:
+    project_name: es-api-gateway
+    service-name: es-api-gateway
+    deployment-env: alpha
+    service-port: 9001
+  git_manage:
+    git-url: git@10.0.1.206:profession-c-java/profession-c-java.git
+    git-redentials: 8a2c55f3-a304-48e4-b950-06395ef697fc
+  ssh_remote_exec_command:
+    host: root@10.0.1.210:22
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

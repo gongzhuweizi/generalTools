@@ -1,29 +1,179 @@
 env:
   alpha:
-    requestDomain:
+    requestDomain: http://alpha-bgateway.wanxue.cn
   dev:
-    requestDomain:
+    requestDomain: http://dev-bgateway.wanxue.cn
   beta:
-    requestDomain:
+    requestDomain: https://beta-bgateway.wanxue.cn
   pro:
-    requestDomain:
+    requestDomain: https://bgateway.wanxue.cn
   dev01:
-    requestDomain:
-
+    requestDomain: http://dev01-bgateway.wanxue.cn
 
 base:
   headers:
     v: '3'
-    p: '1'
+    m: 'test-gateway'
+    p: '13'
     u: 'ffffffff-8d13-a56b-7169-0c980033c587'
     h: 'wanxue'
     forwardId: '70'
     a: '15'
     version: 'v2'
-login:
-  phone:
-  password:
-  requestPath: /businessCareer/recruitment/user/login
+
+
+get_industry_list:
+  requestPath: /businessCareer/common/recruitment/passUrl/industry/list
+
+users:
+  student:
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+    - info:
+        phone: 13100000031
+        password: wx123456
+  loginRequestPath: /businessCareer/recruitment/user/login
+  studentInfoRequestPath: /businessCareer/sys/student/baseInfo/addOrEdit
+
 
 
 

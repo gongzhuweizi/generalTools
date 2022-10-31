@@ -1,0 +1,11 @@
+{
+      "plugins": [
+        {
+          "name": "removeViewBox"
+        },
+        {
+          "name": "removeEmptyAttrs",
+          "active": false
+        }
+      ]
+}

@@ -7,7 +7,6 @@
 @Date ：2022/6/3 1:01 AM
 """
 from gevent import monkey
-
 monkey.patch_all()
 import gevent
 from gevent.queue import Queue
@@ -15,22 +14,20 @@ import json
 from typing import Dict, Set, List, Any
 import yaml
 from HttpRequest.HttpRequest import HttpRequest
-from OperationMySQL.MySQL import OperationMySQL
 import random
+from MySQLThreadPool import MySQLThreadPool
 
 
 class Resume:
 	def __init__(
 			self,
 			envInfoConfigPath: str,
-			careerMySQLObject: OperationMySQL.OperationMySQL,
-			baseMySQLObject: OperationMySQL.OperationMySQL
+			careerMySQLObject,
+			baseMySQLObject
 	):
 		self.__envInfoConfigPath = envInfoConfigPath
 		self.__careerMySQLObject = careerMySQLObject
 		self.__baseMySQLObject = baseMySQLObject
-		self.__careerConnect = self.__careerMySQLObject.get_mysql_connect()
-		self.__baseConnect = self.__baseMySQLObject.get_mysql_connect()
 		self.__env = 'dev'
 		self.__envInfoConfig = self.load_yaml_data(envInfoConfigPath)
 		self.__token = None
@@ -55,6 +52,7 @@ class Resume:
 	@classmethod
 	def random_value(
 			cls,
+
 			listSet: [Set, List],
 			num: int
 	):
@@ -126,8 +124,7 @@ class Resume:
 			self
 	) -> Dict:
 		schoolInfoDict = dict()
-		self.__baseMySQLObject.set_mysql_sql("select id,name from es_school")
-		schoolInfoSet = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)
+		schoolInfoSet = self.random_value(self.__baseMySQLObject.execute_only_sql("select id,name from es_school"), 1)
 		schoolInfoDict['schoolId'] = schoolInfoSet[0][0]
 		schoolInfoDict['schoolName'] = schoolInfoSet[0][1]
 		return schoolInfoDict
@@ -191,9 +188,8 @@ class Resume:
 	def __get_native_place(
 			self,
 	) -> str:
-		self.__baseMySQLObject.set_mysql_sql("select id,name from es_school")
-		self.__baseMySQLObject.set_mysql_sql("select name from es_region where layer=1")
-		nativePlaceSet = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)
+		nativePlaceSet = self.random_value(
+			self.__baseMySQLObject.execute_only_sql("select name from es_region where layer=1"), 1)
 		return nativePlaceSet[0][0]
 
 	"""
@@ -265,15 +261,14 @@ class Resume:
 	def __get_post_ids(
 			self,
 	) -> List:
-
-		self.__careerMySQLObject.set_mysql_sql("select id from common_post where level=3")
-		idList = self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 5)
+		idList = self.random_value(
+			self.__careerMySQLObject.execute_only_sql("select id from common_post where level=3"), 5)
 		postIdsList = list()
 		for id in idList:
-			self.__careerMySQLObject.set_mysql_sql("select pid from common_post where id =%d" % id[0])
-			pid = self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)
-			self.__careerMySQLObject.set_mysql_sql("select pid from common_post where id =%d" % pid[0])
-			ppid = self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)
+			pid = self.random_value(
+				self.__careerMySQLObject.execute_only_sql("select pid from common_post where id =%d" % id[0]), 1)
+			ppid = self.random_value(
+				self.__careerMySQLObject.execute_only_sql("select pid from common_post where id =%d" % pid[0]), 1)
 			postIdsList.append([ppid[0][0], pid[0][0], id[0]])
 		return postIdsList
 
@@ -284,8 +279,7 @@ class Resume:
 	def __get_industry_ids(
 			self,
 	) -> List:
-		self.__careerMySQLObject.set_mysql_sql("select id from common_industry")
-		idList = self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 5)
+		idList = self.random_value(self.__careerMySQLObject.execute_only_sql("select id from common_industry"), 5)
 		industryIdList = [x[0] for x in idList]
 		return industryIdList
 
@@ -296,12 +290,11 @@ class Resume:
 	def __get_functions_ids(
 			self,
 	) -> List:
-		self.__baseMySQLObject.set_mysql_sql("select id from es_function_detail ")
-		idList = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 5)
+		idList = self.random_value(self.__baseMySQLObject.execute_only_sql("select id from es_function_detail"), 5)
 		functionsIds = list()
 		for id in idList:
-			self.__baseMySQLObject.set_mysql_sql("select pid from es_function_detail where id =%d" % id[0])
-			pid = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)
+			pid = self.random_value(
+				self.__baseMySQLObject.execute_only_sql("select pid from es_function_detail where id =%d" % id[0]), 1)
 			functionsIds.append([pid[0][0], id[0]])
 		return functionsIds
 
@@ -312,13 +305,12 @@ class Resume:
 	def __get_expected_areas(
 			self,
 	) -> List:
-		self.__baseMySQLObject.set_mysql_sql("select id,lft,rgt,code from es_region where layer = 2 ")
-		idList = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 5)
+		idList = self.random_value(
+			self.__baseMySQLObject.execute_only_sql("select id,lft,rgt,code from es_region where layer = 2 "), 5)
 		expectedAreas = list()
 		for id in idList:
-			self.__baseMySQLObject.set_mysql_sql(
-				"select code,name from es_region where layer = 1  and lft<= %d  and  rgt>= %d " % (id[1], id[2]))
-			pcode = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)
+			pcode = self.random_value(self.__baseMySQLObject.execute_only_sql(
+				"select code,name from es_region where layer = 1  and lft<= %d  and  rgt>= %d " % (id[1], id[2])), 1)
 			expectedAreas.append([pcode[0][0], id[3]])
 		return expectedAreas
 
@@ -512,17 +504,19 @@ class Resume:
 		yList = [1, 2]
 		bList = [3, 4]
 		zList = [5, 6]
+		sql = ''
 		if eduLevel in yList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=2")
+			sql = "select id from es_subject where type= 1 and layer=2"
+
 		elif eduLevel in bList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=2")
+			sql = "select id from es_subject where type= 2 and layer=2"
 		elif eduLevel in zList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=2")
-
-		id = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
-
-		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s" % id)
-		pid = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
+			sql = "select id from es_subject where type= 3 and layer=2"
+		id = self.random_value(self.__baseMySQLObject.execute_only_sql(sql), 1)[0][0]
+		pid = \
+			self.random_value(self.__baseMySQLObject.execute_only_sql("select pid from es_subject where  id=%s" % id),
+							  1)[
+				0][0]
 		subjectId = [[pid, id]]
 		return subjectId
 
@@ -538,18 +532,23 @@ class Resume:
 		yList = [1, 2]
 		bList = [3, 4]
 		zList = [5, 6]
+		sql = ''
 		if eduLevel in yList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=3")
+			sql = "select id from es_subject where type= 1 and layer=3"
 		elif eduLevel in bList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=3")
+			sql = "select id from es_subject where type= 2 and layer=3"
 		elif eduLevel in zList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=3")
+			sql = "select id from es_subject where type= 3 and layer=3"
 
-		id = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
-		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s" % id)
-		pid = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
-		self.__baseMySQLObject.set_mysql_sql("select pid from es_subject where  id=%s" % pid)
-		ppid = self.random_value(self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect), 1)[0][0]
+		id = self.random_value(self.__baseMySQLObject.execute_only_sql(sql), 1)[0][0]
+		pid = \
+			self.random_value(self.__baseMySQLObject.execute_only_sql("select pid from es_subject where  id=%s" % id),
+							  1)[
+				0][0]
+		ppid = \
+			self.random_value(self.__baseMySQLObject.execute_only_sql("select pid from es_subject where  id=%s" % pid),
+							  1)[
+				0][0]
 		professionSubjectId = [[ppid, pid, id, ]]
 		return professionSubjectId
 
@@ -561,16 +560,17 @@ class Resume:
 			self,
 			eduLevel: int
 	) -> List:
+		sql = ''
 		yList = [1, 2]
 		bList = [3, 4]
 		zList = [5, 6]
 		if eduLevel in yList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 1 and layer=1")
+			sql = "select id from es_subject where type= 1 and layer=1"
 		elif eduLevel in bList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 2 and layer=1")
+			sql = "select id from es_subject where type= 2 and layer=1"
 		elif eduLevel in zList:
-			self.__baseMySQLObject.set_mysql_sql("select id from es_subject where type= 3 and layer=1")
-		sqlResult = self.__baseMySQLObject.execute_only_sql('select', self.__baseConnect)
+			sql = "select id from es_subject where type= 3 and layer=1"
+		sqlResult = self.__baseMySQLObject.execute_only_sql(sql)
 		subjectCount = len(sqlResult)
 		num = random.randint(1, subjectCount)
 		goodAtSubjectIdsList = self.random_value(sqlResult, num)
@@ -585,15 +585,14 @@ class Resume:
 			self,
 	) -> List:
 		academicLevelIds = list()
-
-		self.__careerMySQLObject.set_mysql_sql(
-			"select id from b_recruitment_extension_level WHERE type =1 and (source = 0 or source=1) and `code` = 'X4-1' and pid=0")
-		for x in self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect):
-			self.__careerMySQLObject.set_mysql_sql(
-				"select id from b_recruitment_extension_level WHERE type =1 and (source = 0 or source=1) and `code` = 'X4-1' and pid = %s " %
-				x[0])
+		for x in self.__careerMySQLObject.execute_only_sql(
+				"select id from b_recruitment_extension_level WHERE type =1 and (source = 0 or source=1) and `code` = "
+				"'X4-1' and pid=0"):
 			academicLevelId = \
-				self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)[0][0]
+				self.random_value(self.__careerMySQLObject.execute_only_sql(
+					"select id from b_recruitment_extension_level WHERE type =1 and (source = 0 or source=1) and "
+					"`code` = 'X4-1' and pid = %s " %
+					x[0]), 1)[0][0]
 			academicLevelIds.append([x[0], academicLevelId])
 		return academicLevelIds
 
@@ -606,14 +605,14 @@ class Resume:
 	) -> List:
 		researchLevelIds = list()
 
-		self.__careerMySQLObject.set_mysql_sql(
-			"select id from b_recruitment_extension_level WHERE type =2 and (source = 0 or source=1) and `code` = 'X4-2' and pid=0")
-		for x in self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect):
-			self.__careerMySQLObject.set_mysql_sql(
-				"select id from b_recruitment_extension_level WHERE type =2 and (source = 0 or source=1) and `code` = 'X4-2' and pid = %s " %
-				x[0])
+		for x in self.__careerMySQLObject.execute_only_sql(
+				"select id from b_recruitment_extension_level WHERE type =2 and (source = 0 or source=1) and `code` = "
+				"'X4-2' and pid=0"):
 			researchLevelId = \
-				self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)[0][0]
+				self.random_value(self.__careerMySQLObject.execute_only_sql(
+					"select id from b_recruitment_extension_level WHERE type =2 and (source = 0 or source=1) and "
+					"`code` = 'X4-2' and pid = %s " %
+					x[0]), 1)[0][0]
 			researchLevelIds.append([x[0], researchLevelId])
 		return researchLevelIds
 
@@ -625,14 +624,13 @@ class Resume:
 			self,
 	) -> List:
 		characterTraitsLevelIds = list()
-		self.__careerMySQLObject.set_mysql_sql(
-			"select id from b_recruitment_extension_level WHERE type =4 and (source = 0 or source=1)  and pid=0")
-		for x in self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect):
-			self.__careerMySQLObject.set_mysql_sql(
-				"select id from b_recruitment_extension_level WHERE type =4 and (source = 0 or source=1)  and pid = %s " %
-				x[0])
+
+		for x in self.__careerMySQLObject.execute_only_sql(
+				"select id from b_recruitment_extension_level WHERE type =4 and (source = 0 or source=1)  and pid=0"):
 			characterTraitsLevelId = \
-				self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)[0][0]
+				self.random_value(self.__careerMySQLObject.execute_only_sql(
+					"select id from b_recruitment_extension_level WHERE type =4 and (source = 0 or source=1)  and pid = %s " %
+					x[0]), 1)[0][0]
 			characterTraitsLevelIds.append([x[0], characterTraitsLevelId])
 		return characterTraitsLevelIds
 
@@ -644,14 +642,13 @@ class Resume:
 			self,
 	) -> List:
 		psychologicalPowerLevelIds = list()
-		self.__careerMySQLObject.set_mysql_sql(
-			"select id from b_recruitment_extension_level WHERE type =5 and (source = 0 or source=1)  and pid=0")
-		for x in self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect):
-			self.__careerMySQLObject.set_mysql_sql(
-				"select id from b_recruitment_extension_level WHERE type =5 and (source = 0 or source=1)  and pid = %s " %
-				x[0])
+
+		for x in self.__careerMySQLObject.execute_only_sql(
+				"select id from b_recruitment_extension_level WHERE type =5 and (source = 0 or source=1)  and pid=0"):
 			psychologicalPowerLevelId = \
-				self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)[0][0]
+				self.random_value(self.__careerMySQLObject.execute_only_sql(
+					"select id from b_recruitment_extension_level WHERE type =5 and (source = 0 or source=1)  and pid = %s " %
+					x[0]), 1)[0][0]
 			psychologicalPowerLevelIds.append([x[0], psychologicalPowerLevelId])
 		return psychologicalPowerLevelIds
 
@@ -663,15 +660,12 @@ class Resume:
 			self,
 	) -> List:
 		expressionLevelIds = list()
-		self.__careerMySQLObject.set_mysql_db('es_career')
-		self.__careerMySQLObject.set_mysql_sql(
-			"select id from b_recruitment_extension_level WHERE type =6 and (source = 0 or source=1)  and pid=0")
-		for x in self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect):
-			self.__careerMySQLObject.set_mysql_sql(
-				"select id from b_recruitment_extension_level WHERE type =6 and (source = 0 or source=1)  and pid = %s " %
-				x[0])
+		for x in self.__careerMySQLObject.execute_only_sql(
+				"select id from b_recruitment_extension_level WHERE type =6 and (source = 0 or source=1)  and pid=0"):
 			expressionLevelId = \
-				self.random_value(self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)[0][0]
+				self.random_value(self.__careerMySQLObject.execute_only_sql(
+					"select id from b_recruitment_extension_level WHERE type =6 and (source = 0 or source=1)  and pid = %s " %
+					x[0]), 1)[0][0]
 			expressionLevelIds.append([x[0], expressionLevelId])
 		return expressionLevelIds
 
@@ -684,22 +678,21 @@ class Resume:
 	) -> List:
 
 		executionLeadershipLevelIds = list()
-		self.__careerMySQLObject.set_mysql_sql(
-			"select id from b_recruitment_extension_level WHERE type =7 and (source = 0 or source=1)  and pid=0")
-		for x in self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect):
-			self.__careerMySQLObject.set_mysql_sql(
+
+		for x in self.__careerMySQLObject.execute_only_sql(
+				"select id from b_recruitment_extension_level WHERE type =7 and (source = 0 or source=1)  and pid=0"):
+			executionLeadershipLevelInfo = self.__careerMySQLObject.execute_only_sql(
 				"select id,name from b_recruitment_extension_level WHERE type =7 and (source = 0 or source=1)  and pid = %s " %
 				x[0])
-			executionLeadershipLevelInfo = self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect)
 			for y in executionLeadershipLevelInfo:
 				if y[1] == "无":
 					executionLeadershipLevelIds.append([x[0], executionLeadershipLevelInfo[0][0]])
 					continue
-				self.__careerMySQLObject.set_mysql_sql(
-					"select id from b_recruitment_extension_level WHERE type =7 and (source = 0 or source=1)  and pid = %s " %
-					y[0])
+
 				executionLeadershipLevelId = self.random_value(
-					self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)
+					self.__careerMySQLObject.execute_only_sql(
+						"select id from b_recruitment_extension_level WHERE type =7 and (source = 0 or source=1)  and pid = %s " %
+						y[0]), 1)
 				executionLeadershipLevelIds.append(
 					[x[0], executionLeadershipLevelInfo[0][0], executionLeadershipLevelId[0][0]])
 		return executionLeadershipLevelIds
@@ -713,19 +706,18 @@ class Resume:
 			type: int
 	) -> List:
 		englishLevelIds = list()
-		self.__careerMySQLObject.set_mysql_sql(
-			"select id from b_recruitment_extension_level WHERE type =%d and (source = 0 or source=1)  and pid=0" % type)
-		for x in self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect):
-			self.__careerMySQLObject.set_mysql_sql(
+
+		for x in self.__careerMySQLObject.execute_only_sql(
+				"select id from b_recruitment_extension_level WHERE type =%d and (source = 0 or source=1)  and pid=0" % type):
+
+			englishLevelId = self.__careerMySQLObject.execute_only_sql(
 				"select id from b_recruitment_extension_level WHERE type =%d and (source = 0 or source=1)  and pid=%s" % (
 					type, x[0]))
-			englishLevelId = self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect)
 			for y in englishLevelId:
-				self.__careerMySQLObject.set_mysql_sql(
-					"select id from b_recruitment_extension_level WHERE type =%d and (source = 0 or source=1)  and pid=%s" % (
-						type, y[0]))
 				englishLevelIdStatus = self.random_value(
-					self.__careerMySQLObject.execute_only_sql('select', self.__careerConnect), 1)
+					self.__careerMySQLObject.execute_only_sql(
+						"select id from b_recruitment_extension_level WHERE type =%d and (source = 0 or source=1)  and pid=%s" % (
+							type, y[0])), 1)
 				englishLevelIds.append([x[0], y[0], englishLevelIdStatus[0][0]])
 		return englishLevelIds
 
@@ -884,8 +876,6 @@ class Resume:
 			print("用户" + self.__studentInfo['phone'] + '  第三阶段求职能力与资历信息录入成功！')
 		else:
 			print("用户" + self.__studentInfo['phone'] + '  第三阶段求职能力与资历信息录入失败！')
-		self.__careerConnect.close()
-		self.__baseConnect.close()
 
 
 """
@@ -893,17 +883,14 @@ class Resume:
 """
 
 
-def student_resume(student_info):
+def student_resume(
+		student_info: Dict,
+		careerMySQLObject,
+		baseMySQLObject,
+		env: str
+
+) -> None:
 	envInfoConfigPath = "config/config.yaml"
-	env = 'dev'
-	config = Resume.load_yaml_data(envInfoConfigPath)
-	dbHost = config[env]['mysql']['mysqlHost']
-	dbUsername = config[env]['mysql']['mysqlUsername']
-	dbPassword = config[env]['mysql']['mysqlPassword']
-	careerMySQLObject = OperationMySQL.OperationMySQL(dbHost, dbUsername, dbPassword)
-	careerMySQLObject.set_mysql_db('es_career')
-	baseMySQLObject = OperationMySQL.OperationMySQL(dbHost, dbUsername, dbPassword)
-	baseMySQLObject.set_mysql_db("es_base")
 	resumeObject = Resume(envInfoConfigPath, careerMySQLObject, baseMySQLObject)
 	resumeObject.set_env(env)
 	resumeObject.get_token(student_info)
@@ -931,11 +918,17 @@ def put_queue(
 
 
 def get_queue(
-		student_info_queue: Queue
+		student_info_queue: Queue,
+		careerMySQLObject,
+		baseMySQLObject,
+		env: str
+
 ) -> None:
+
 	while not student_info_queue.empty():
 		data = student_info_queue.get_nowait()
-		student_resume(data)
+
+		student_resume(data, careerMySQLObject, baseMySQLObject, env)
 
 
 """
@@ -944,13 +937,31 @@ def get_queue(
 
 
 def run(
-		taskslimit: int = None
+		taskslimit: int = None,
+		env: str = str
 ) -> None:
+	envInfoConfigPath = "config/config.yaml"
+	config = Resume.load_yaml_data(envInfoConfigPath)
+	dbType = config[env]['db']['type']
+	mysqlConfig = config[env]['db']['config']
+	careerMySQLConfig = mysqlConfig.copy()
+	careerMySQLConfig['database'] = 'es_career'
+	baseMySQLConfig = mysqlConfig.copy()
+	baseMySQLConfig['database'] = 'es_base'
+	print("正在创建career数据库连接池！")
+	careerMySQLObject = MySQLThreadPool.DataBase(dbType, careerMySQLConfig)
+	print("正在创建base数据库连接池！")
+	baseMySQLObject = MySQLThreadPool.DataBase(dbType, baseMySQLConfig)
+	print("正在创建异步队列")
 	student_info_queue = Queue()
+	"""
+	存入数据
+	"""
+	print("向队列存入学生信息")
 	put_queue(student_info_queue)
 	taskList = []
 	for x in range(taskslimit):
 		# 循环几次，相当于开了几个并发任务
-		task = gevent.spawn(get_queue, student_info_queue)
+		task = gevent.spawn(get_queue, student_info_queue, careerMySQLObject, baseMySQLObject, env)
 		taskList.append(task)
 	gevent.joinall(taskList)  # 使用协程来执行

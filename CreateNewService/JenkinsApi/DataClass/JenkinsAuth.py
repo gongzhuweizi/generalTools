@@ -16,4 +16,11 @@ class JenkinsAuth:
 	username: str
 	password: str
 	token: str
-
+	default_git_branch: str
+	project_name: str
+	service_name: str
+	deployment_env: str
+	service_port: str
+	git_url: str
+	git_redentials: str
+	ssh_host: str

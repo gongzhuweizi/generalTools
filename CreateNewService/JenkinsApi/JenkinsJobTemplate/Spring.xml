@@ -1,12 +1,11 @@
-<?xml version='1.1' encoding='UTF-8'?>
 <project>
-  <actions/>
-  <description></description>
-  <keepDependencies>false</keepDependencies>
+  <actions />
+  <description />
+  <keepDependencies>true</keepDependencies>
   <properties>
     <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.22">
-      <gitLabConnection></gitLabConnection>
-      <jobCredentialId></jobCredentialId>
+      <gitLabConnection />
+      <jobCredentialId />
       <useAlternativeCredential>false</useAlternativeCredential>
     </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <jenkins.model.BuildDiscarderProperty>
@@ -18,13 +17,13 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
+      <parameterDefinitions class="cmd">
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.13">
           <name>git_chose</name>
           <description>git分支选择</description>
           <uuid>c0a52b06-2a4c-4d39-b2d2-e706efa30db9</uuid>
           <type>PT_BRANCH</type>
-          <branch></branch>
+          <branch />
           <tagFilter>*</tagFilter>
           <branchFilter>.*</branchFilter>
           <sortMode>NONE</sortMode>
@@ -137,31 +136,31 @@
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="empty-list"/>
-    <extensions/>
+    <submoduleCfg class="empty-list" />
+    <extensions />
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers />
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <org.jvnet.hudson.plugins.SSHBuilder plugin="ssh@2.6.1">
       <siteName>root@10.0.1.210:22</siteName>
-      <command>workspace=`echo $WORKSPACE|sed &apos;s#/var/jenkins_home#/home/wx/.jenkins#g&apos;`
+      <command>workspace=`echo $WORKSPACE|sed 's#/var/jenkins_home#/home/wx/.jenkins#g'`
 
-if [[ &quot;$projectName&quot; == &quot;$serviceName&quot; ]];then
-   echo &quot;$workspace &amp;&amp; ssh gradlew --no-daemon  $serviceName:build -x test&quot;
+if [[ "$projectName" == "$serviceName" ]];then
+   echo "$workspace &amp;&amp; ssh gradlew --no-daemon  $serviceName:build -x test"
    cd $workspace &amp;&amp; sh gradlew --no-daemon  $serviceName:build -x test
    if [[ $? -ne 0 ]];then
-      echo &quot;构建失败&quot;  &amp;&amp; exit 123
+      echo "构建失败"  &amp;&amp; exit 123
    fi
 else
-   echo &quot;$workspace &amp;&amp; sh gradlew --no-daemon  $projectName:$serviceName:build -x test&quot;
+   echo "$workspace &amp;&amp; sh gradlew --no-daemon  $projectName:$serviceName:build -x test"
    cd $workspace &amp;&amp; sh gradlew --no-daemon  $projectName:$serviceName:build -x test
    if [[ $? -ne 0 ]];then
-      echo &quot;构建失败&quot;  &amp;&amp; exit 123
+      echo "构建失败"  &amp;&amp; exit 123
    fi
 fi</command>
       <execEachLine>false</execEachLine>
@@ -169,15 +168,15 @@ fi</command>
     </org.jvnet.hudson.plugins.SSHBuilder>
     <org.jvnet.hudson.plugins.SSHBuilder plugin="ssh@2.6.1">
       <siteName>root@10.0.1.210:22</siteName>
-      <command>echo  &quot;$BUILD_USER_ID&quot; 
-workspace=`echo $WORKSPACE|sed &apos;s#/var/jenkins_home#/home/wx/.jenkins#g&apos;`
-sh   /scripts/shell/online_build_image/online_build_image.sh  &quot;$projectName&quot;  &quot;$serviceName&quot;  &quot;$workspace&quot;  &quot;$deploymentEnv&quot; &quot;$memXms&quot; &quot;$memXmx&quot; &quot;$memXmn&quot; &quot;$metaSpaceSize&quot; &quot;$maxMetaSpaceSize&quot; &quot;$servicePort&quot; &quot;$BUILD_USER_ID&quot;  &quot;$podNum&quot;</command>
+      <command>echo  "$BUILD_USER_ID"
+workspace=`echo $WORKSPACE|sed 's#/var/jenkins_home#/home/wx/.jenkins#g'`
+sh   /scripts/shell/online_build_image/online_build_image.sh  "$projectName"  "$serviceName"  "$workspace"  "$deploymentEnv" "$memXms" "$memXmx" "$memXmn" "$metaSpaceSize" "$maxMetaSpaceSize" "$servicePort" "$BUILD_USER_ID"  "$podNum"</command>
       <execEachLine>false</execEachLine>
       <hideCommand>false</hideCommand>
     </org.jvnet.hudson.plugins.SSHBuilder>
   </builders>
-  <publishers/>
+  <publishers />
   <buildWrappers>
-    <org.jenkinsci.plugins.builduser.BuildUser plugin="build-user-vars-plugin@1.8"/>
+    <org.jenkinsci.plugins.builduser.BuildUser plugin="build-user-vars-plugin@1.8" />
   </buildWrappers>
 </project>

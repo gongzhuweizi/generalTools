@@ -1,0 +1,3 @@
+alibabacloud-cr20181201==1.0.10
+alibabacloud-tea_openapi
+

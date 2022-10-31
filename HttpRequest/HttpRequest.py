@@ -12,9 +12,8 @@ from typing import Union
 from typing import Any, Optional, Dict
 import DataClassRequestParams
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-
-
 
 """
 http请求工具类
@@ -28,16 +27,9 @@ class HttpRequest():
 
 	def __init__(
 			self,
-			url: Union[str, bytes]
 	):
-		"""
-		@param host: str
-		"""
-		self.__url = url
 
-	"""
-	私有属性
-	"""
+	__url: str = None
 	__headers: Optional[Dict] = None
 	__params: Optional[Dict] = None
 	__data: Optional[Dict] = None

@@ -8,7 +8,7 @@
 from typing import Tuple, Any
 
 import pymysql
-from MySQLExceptions import MySQLCustomExcetion
+from OperationMySQL.MySQLExceptions import MySQLCustomExcetion
 """
 mysql操作工具类，传入host，user，password，db参数
 """

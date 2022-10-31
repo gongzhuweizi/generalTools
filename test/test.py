@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 '''
-@Project ：generalTools
-@File ：岗位.py
+@Project ：generalTools 
+@File ：test.py
 @Author ：zhangyi
-@Date ：2022/6/2 3:27 PM
+@Date ：2022/9/9 10:49 AM 
 '''
-
