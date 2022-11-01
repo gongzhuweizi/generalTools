@@ -1,0 +1,148 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>项目说明</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.22">
+      <gitLabConnection></gitLabConnection>
+      <jobCredentialId></jobCredentialId>
+      <useAlternativeCredential>false</useAlternativeCredential>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>3</daysToKeep>
+        <numToKeep>10</numToKeep>
+        <artifactDaysToKeep>3</artifactDaysToKeep>
+        <artifactNumToKeep>5</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.13">
+          <name>git_chose</name>
+          <description>git分支选择</description>
+          <uuid>a7c19e7c-e72e-4f44-9a8b-30984f8ae839</uuid>
+          <type>PT_BRANCH</type>
+          <branch></branch>
+          <tagFilter>*</tagFilter>
+          <branchFilter>.*</branchFilter>
+          <sortMode>NONE</sortMode>
+          <defaultValue>default_branch</defaultValue>
+          <selectedValue>NONE</selectedValue>
+          <quickFilterEnabled>true</quickFilterEnabled>
+          <listSize>5</listSize>
+        </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>serviceName</name>
+          <description>服务名称</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>front_service_name</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>node_version</name>
+          <description>node 版本</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>node_version</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>yarnSource</name>
+          <description>yarn源</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>https://registry.npm.taobao.org/</string>
+              <string>https://registry.npmjs.org/</string>
+              <string>http://r.cnpmjs.org/</string>
+              <string>https://registry.nodejitsu.com/</string>
+              <string>http://registry.mirror.cqupt.edu.cn/</string>
+              <string>https://skimdb.npmjs.com/registry/</string>
+              <string>http://registry.enpmjs.org/</string>
+              <string>https://registry.yarnpkg.com</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>buildStaticDir</name>
+          <description>yarn构建前端项目生成文件所目录</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>package_name</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>deploymentEnv</name>
+          <description>部署环境</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>env</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.9.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>git@10.0.1.206:profession-c-front/provider-b-career-recruit.git</url>
+        <credentialsId>8a2c55f3-a304-48e4-b950-06395ef697fc</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>$git_chose</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="empty-list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <org.jvnet.hudson.plugins.SSHBuilder plugin="ssh@2.6.1">
+      <siteName>build_remote_host</siteName>
+      <command>workspace=`echo $WORKSPACE|sed &apos;s#/var/jenkins_home#/home/wx/.jenkins#g&apos;`
+cd $workspace
+# 切换node版本
+nvm install $node_version &amp;&amp;  nvm use $node_version
+node -v
+#更换yarn源
+yarn config set registry $yarnSource
+if [  -f &quot;$workspace&quot;/yarn.lock ];then
+   cd $workspace &amp;&amp; rm -f yarn.lock
+   cd $workspace &amp;&amp; rm -f package-lock.json
+fi
+#安装依赖
+cd $workspace &amp;&amp; yarn install
+#构建测试环境前端项目
+yarn run build:$deploymentEnv
+</command>
+      <execEachLine>false</execEachLine>
+      <hideCommand>false</hideCommand>
+    </org.jvnet.hudson.plugins.SSHBuilder>
+    <org.jvnet.hudson.plugins.SSHBuilder plugin="ssh@2.6.1">
+      <siteName>update_service_remote_host</siteName>
+      <command>workspace=`echo $WORKSPACE|sed &apos;s#/var/jenkins_home#/home/wx/.jenkins#g&apos;`
+sh -x /scripts/shell/front_build_image_deploy/front_build_image_deploy.sh  &quot;$serviceName&quot;    &quot;$deploymentEnv&quot;  &quot;$workspace&quot;  &quot;$buildStaticDir&quot; &quot;$BUILD_USER_ID&quot; </command>
+      <execEachLine>false</execEachLine>
+      <hideCommand>false</hideCommand>
+    </org.jvnet.hudson.plugins.SSHBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.builduser.BuildUser plugin="build-user-vars-plugin@1.8"/>
+  </buildWrappers>
+</project>
